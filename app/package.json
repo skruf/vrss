@@ -1,11 +1,17 @@
 {
-  "name": "electron-boilerplate-vue",
-  "productName": "Electron Boilerplate Vue",
+  "name": "vrss",
+  "productName": "Vue.js RSS Reader",
   "version": "0.1.0",
-  "description": "An Electron + Vue.js project.",
-  "author": "Brad Stewart <me@bradstewart.co>",
+  "description": "RSS Feed Reader built on Vue.js and Electron",
+  "author": "Thomas Låver <tholav@gmail.com>",
   "main": "background.js",
   "dependencies": {
-    "jquery": "2.2.2"
+    "jquery": "2.2.2",
+    "materialize-css": "^0.97.6",
+    "uuid": "^2.0.2",
+    "vue-mdl": "^0.7.4",
+    "vue-router": "^0.7.13",
+    "vuex": "^0.6.3",
+    "vuex-router-sync": "^1.0.0"
   }
 }
