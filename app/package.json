@@ -1,7 +1,7 @@
 {
   "name": "vrss",
   "productName": "Vue.js RSS Reader",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "RSS Feed Reader built on Vue.js and Electron",
   "author": "Thomas Låver <tholav@gmail.com>",
   "main": "background.js",

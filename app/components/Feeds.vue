@@ -82,68 +82,142 @@ $secondary_font-color = rgb(51, 51, 51)
         margin-left 10px
 
 .entries_view
-  width 100%
-  height 100%
   .view_header
     padding 20px 30px
     border-bottom 1px solid rgb(228, 232, 235)
     display none
-  .view_content
-    .content_entries
+  .view_container
+    .container_entries
       .entries_entry
-        height 50px
-        display flex
-        align-items center
-        justify-content space-between
-        border-bottom 1px solid rgb(228, 232, 235)
-        padding 0 20px
-        &:hover
-          color #000
-          background rgb(228, 232, 235)
-          cursor pointer
-        &:last-child
-          border-bottom none
-        .entry_feed
+        .entry_titleline, .entry_content
+          border-bottom 1px solid rgb(228, 232, 235)
+        .entry_titleline
           display flex
           align-items center
-          padding 2px 8px
-          border-radius 3px
-          border 1px solid rgb(228, 232, 235)
-          .feed_favicon
-            margin-right 4px
-            .favicon_image
-              width 14px
-              height 14px
-              margin-top 2px
-          .feed_title
-            text-transform uppercase
-            font-size 9px
-            font-weight 600
-        .entry_details
-          width 100%
-          display flex
           justify-content space-between
-          align-items center
-          margin 0 20px
-          .details_title
-            font-weight 600
-          /*.details_summary*/
-          .details_published
-            font-weight 300
-            font-size 0.9em
-            text-transform uppercase
-        .entry_controls
-          display flex
-          justify-content flex-end
+          padding 10px 20px
+          &:last-child
+            border-bottom none
+          .titleline_feed
+            display flex
+            align-items center
+            padding 2px 8px
+            border-radius 3px
+            border 1px solid rgb(228, 232, 235)
+            .feed_favicon
+              margin-right 4px
+              .favicon_image
+                width 14px
+                height 14px
+                margin-top 2px
+            .feed_title
+              text-transform uppercase
+              font-size 9px
+              font-weight 600
+          .titleline_details
+            width 100%
+            display flex
+            justify-content space-between
+            align-items center
+            margin 0 20px
+            .details_title
+              font-weight 600
+            /*.details_summary*/
+            .details_published
+              font-weight 300
+              font-size 0.9em
+              text-transform uppercase
+          .titleline_controls
+            display flex
+            justify-content flex-end
           .controls_controller
             padding 0px 5px
-            &:hover
-              color #fff
             .controller_icon
               width 14px
               height 14px
               font-size 14px
+              &:hover
+                color #fff
+        &:not(.entries_entry-active) .entry_titleline:hover
+          color #000
+          background rgb(228, 232, 235)
+          cursor pointer
 
+        .entry_content
+          display none
+          padding 20px
+          margin-top 100px
+          font-size 21px
+          letter-spacing -.003em
+          line-height 1.58
+          font-style normal
+          font-weight 400
+          font-family medium-content-serif-font,Georgia,Cambria,"Times New Roman",Times,serif
+          color rgba(0, 0, 0, .8)
+          p, h1, h2, h3, h4, h5, h6
+            &:first-child
+              margin-top 0
+          p
+            margin-top 30px
+          h1, h2, h3, h4, h5, h6
+            margin-top 30px
+      .entries_entry-active
+        background #fff
+        z-index 3
+        top 0
+        left 0
+        position absolute
+        width 100%
+        min-height 100%
+        .entry_titleline
+          padding 0 20px
+          height 100px
+          position fixed
+          left 0
+          top 0
+          right 0
+          background rgba(255, 255, 255, .925)
+          /*.titleline_feed, .titleline_controls
+            position absolute
+            top 20px
+          .titleline_feed
+            left 20px
+          .titleline_controls
+            right 20px*/
+          .titleline_details
+            display inline-block
+            text-align center
+            .details_title
+              font-size 38px
+            .details_published
+              display block
+              margin-top 15px
+        .entry_content
+          display block
+
+        /*.entry_content
+          display none
+          padding 10px 20px 20px
+          font-size 21px
+          letter-spacing -.003em
+          line-height 1.58
+          font-style normal
+          font-weight 400
+          font-family medium-content-serif-font,Georgia,Cambria,"Times New Roman",Times,serif
+          color rgba(0, 0, 0, .8)
+          p, h1, h2, h3, h4, h5, h6
+            &:first-child
+              margin-top 0
+          p
+            margin-top 30px
+          h1, h2, h3, h4, h5, h6
+            margin-top 30px
+      .entries_entry-active
+        box-shadow inset 0px 0px 20px -10px #000
+        .entry_titleline
+          border-bottom none
+        .entry_content
+          display block*/
 </style>
 
 <template>
@@ -215,95 +289,696 @@ $secondary_font-color = rgb(51, 51, 51)
         </div>
       </div>
     </nav>
-    <div class="entries_view">
+    <div class="entries_view content">
       <div class="view_header">
         <h2 class="header_title">All entries</h2>
       </div>
-      <div class="view_content">
-        <div class="content_entries">
-
+      <div class="view_container">
+        <div class="container_entries">
           <div class="entries_entry">
-            <span class="entry_feed">
-              <span class="feed_favicon">
-                <img class="favicon_image" src="http://vuejs.org/images/logo.png">
+
+            <div class="entry_titleline">
+              <span class="titleline_feed">
+                <span class="feed_favicon">
+                  <img class="favicon_image" src="http://vuejs.org/images/logo.png">
+                </span>
+                <span class="feed_title">Vue.js</span>
               </span>
-              <span class="feed_title">Vue.js</span>
-            </span>
-            <span class="entry_details">
-              <span class="details_title">Announcing Vue.js 2.0</span>
-              <!-- <span class="details_summary">Today I am thrilled to announce the first public preview of Vue.js 2.0, which brings along many exciting improvements and new features. Let’s take a peek at what’s in store!</span> -->
-              <!-- <span class="details_content">
-                <p>Today I am thrilled to announce the first public preview of Vue.js 2.0, which brings along many exciting improvements and new features. Let’s take a peek at what’s in store!</p> <a id="more"></a> <h2 id="Even-Leaner-Even-Faster"><a href="#Even-Leaner-Even-Faster" class="headerlink" title="Eve">n Leaner, Even Faster"></a>Even Leaner, Even Faster</h2><p>Vue.js has always focused on staying light and fast, but 2.0 pushes it even further. The rendering layer is now based on a lightweight virtual-DOM implementation (based on <a href="https://github.com/paldepind/snabbdom" target="_blank" rel="external">Snabbdom</a>) that improves initial rendering speed and memory consumption by up to 2~4x in most scenarios (check out <a href="https://github.com/vuejs/vue/tree/next/benchmarks" target="_blank" rel="external">these benchmarks</a>). The template-to-virtual-DOM compiler and the runtime can be separated, so you can pre-compile templates and ship your app with only the runtime, which is less than 12kb min+gzip (as a reference, React 15 is 44kb min+gzip). The compiler also works in the browser, which means you can still drop in one script tag and start hacking, just like before. Even with the compiler included, the build is sitting at 17kb min+gzip, still lighter than the current 1.0 build.</p> <h2 id="Not-Your-Average-Virtual-DOM"><a href="#Not-Your-Average-Virtual-DOM" class="headerlink" title="Not Your Average Virtual-DOM"></a>Not Your Average Virtual-DOM</h2><p>Now, just virtual-DOM sounds boring because there are so many implementations out there - but this one is different. Combined with Vue’s reactivity system, it provides optimized re-rendering out of the box without you having to do anything. Each component keeps track of its reactive dependencies during its render, so the system knows precisely when to re-render, and which components to re-render. No need for <code>shouldComponentUpdate</code> or immutable data structures - <strong>it just works</strong>.</p> <p>In addition, Vue 2.0 applies some advanced optimizations during the template-to-virtual-DOM compilation phase:</p> <ol> <li><p>It detects static class names and attributes so that they are never diffed after the initial render.</p> </li> <li><p>It detects the maximum static sub trees (sub trees with no dynamic bindings) and hoist them out of the render function. So on each re-render, it directly reuses the exact same virtual nodes and skips the diffing.</p> </li> </ol> <p>These advanced optimizations can usually only be achieved via Babel plugins when using JSX, but with Vue 2.0 you can get them even using the in-browser compiler.</p> <p>The new rendering system also allows you to disable reactive conversions by simply freezing your data and manually force updates, essentially giving you full control over the re-rendering process.</p> <p>With these techniques combined, Vue 2.0 ensures blazing fast performance in every possible scenario while requiring minimal optimization efforts from the developer.</p> <h2 id="Templates-JSX-or-Hyperscript"><a href="#Templates-JSX-or-Hyperscript" class="headerlink" title="Templates, JSX, or Hyperscript?"></a>Templates, JSX, or Hyperscript?</h2><p>Developers tend to have strong opinions on templates vs. JSX. On the one hand, templates are closer to HTML - they map better to the semantic structure of your app and make it much easier to think visually about the design, layout and styling. On the other hand, templates are limited to the DSL while the programmatic nature of JSX/hyperscript provides the full expressive power of a turing-complete language.</p> <p>Being a designer/developer hybrid, I prefer writing most of my interfaces in templates, but in certain cases I do miss the flexibility of JSX/hyperscript. An example would be writing a component that programmatically handles its children, something not feasible with just the template-based slot mechanism.</p> <p>Well, why not have both? In Vue 2.0, you can keep using the familiar template syntax, or drop down to the virtual-DOM layer whenever you feel constrained by the template DSL. Instead of the <code>template</code> option, just replace it with a <code>render</code> function. You can even embed render functions in your templates using the special <code>&lt;render&gt;</code> tag! The best of both worlds, in the same framework.</p> <h2 id="Streaming-Server-side-Rendering"><a href="#Streaming-Server-side-Rendering" class="headerlink" title="Streaming Server-side Rendering"></a>Streaming Server-side Rendering</h2><p>With the migration to virtual-DOM, Vue 2.0 naturally supports server-side rendering with client-side hydration. One pain point of current mainstream server rendering implementations, such as React’s, is that the rendering is synchronous so it can block the server’s event loop if the app is complex. Synchronous server-side rendering may even adversely affect time-to-content on the client. Vue 2.0 provides built-in streaming server-side rendering, so that you can render your component, get a readable stream back and directly pipe it to the HTTP response. This ensures your server is responsive, and gets the rendered content to your users faster.</p> <h2 id="Unlocking-More-Possibilities"><a href="#Unlocking-More-Possibilities" class="headerlink" title="Unlocking More Possibilities"></a>Unlocking More Possibilities</h2><p>With the new architecture, there are even more possibilities to explore - for example, rendering to native interfaces on mobile. Currently, we are exploring a port of Vue.js 2.0 that uses <a href="http://alibaba.github.io/weex/" target="_blank" rel="external">weex</a> as a native rendering backend, a project maintained by engineers at Alibaba Group, the biggest tech enterprise of China. It is also technically feasible to adapt Vue 2.0’s virtual-DOM to run inside ReactNative. We are excited to see how it goes!</p> <h2 id="Compatibility-and-What-to-Expect-Next"><a href="#Compatibility-and-What-to-Expect-Next" class="headerlink" title="Compatibility and What to Expect Next"></a>Compatibility and What to Expect Next</h2><p>Vue.js 2.0 is still in pre-alpha, but you can checkout the source code <a href="https://github.com/vuejs/vue/tree/next/" target="_blank" rel="external">here</a>. Despite being a full rewrite, the API is largely compatible with 1.0 with the exception of some intentional deprecations. Check out <a href="https://github.com/vuejs/vue/tree/next/examples" target="_blank" rel="external">the same official examples written in 2.0</a> - you will see that not much has changed!</p> <p>The feature deprecations are part of our continued effort to provide the simplest API possible for maximum developer productivity. You can check out a 1.0 vs. 2.0 feature comparison <a href="https://github.com/vuejs/vue/wiki/2.0-features" target="_blank" rel="external">here</a>. This does mean that it will take some effort to migrate an existing app if you happen to use some of these deprecated features heavily, but we will provide detailed upgrade guides in the future.</p> <p>There is still much work left to be done. We will be releasing the first alpha once we reach satisfactory test coverage, and we are aiming for beta by end of May / early June. In addition to more tests, we also need to update the supporting libraries (vue-router, Vuex, vue-loader, vueify…). Currently only Vuex works with 2.0 out of the box, but we will make sure that everything works smoothly together when 2.0 ships.</p> <p>We are also not forgetting about 1.x! 1.1 will be released alongside 2.0 beta, with an LTS period of 6-month critical bug fixes and 9-month security updates. It will also ship with optional deprecation warnings to get you prepared for upgrading to 2.0. Stay tuned!</p>
-              </span> -->
-              <span class="details_published">Apr 27, 2016</span>
-            </span>
-            <span class="entry_controls">
-              <span class="controls_controller controller_star-entry">
-                <i class="controller_icon star-entry_icon material-icons">star</i>
+              <span class="titleline_details">
+                <span class="details_title">Announcing Vue.js 2.0</span>
+                <!-- <span class="details_summary">Today I am thrilled to announce the first public preview of Vue.js 2.0, which brings along many exciting improvements and new features. Let’s take a peek at what’s in store!</span> -->
+                <span class="details_published">Apr 27, 2016</span>
               </span>
-              <span class="controls_controller controller-remove-entry">
-                <i class="controller_icon remove-entry_icon material-icons">delete</i>
+              <span class="titleline_controls">
+                <span class="controls_controller controller_star-entry">
+                  <i class="controller_icon star-entry_icon material-icons">star</i>
+                </span>
+                <span class="controls_controller controller-remove-entry">
+                  <i class="controller_icon remove-entry_icon material-icons">delete</i>
+                </span>
               </span>
-            </span>
+            </div>
+
+            <div class="entry_content">
+              <p>
+                Today I am thrilled to announce the first public preview of
+                Vue.js 2.0, which brings along many exciting improvements and
+                new features. Let’s take a peek at what’s in store!
+              </p>
+              <a id="more"></a>
+              <h2 id="Even-Leaner-Even-Faster">
+                <a href="#Even-Leaner-Even-Faster" class="headerlink" title="Eve">
+                  Even Leaner, Even Faster">
+                </a>
+                Even Leaner, Even Faster
+              </h2>
+              <p>
+                Vue.js has always focused on staying light and fast, but 2.0
+                pushes it even further. The rendering layer is now based on a
+                lightweight virtual-DOM implementation (based on
+                <a href="https://github.com/paldepind/snabbdom" target="_blank"
+                rel="external">
+                  Snabbdom
+                </a>) that improves initial rendering speed and memory
+                consumption by up to 2~4x in most scenarios (check out
+                <a href="https://github.com/vuejs/vue/tree/next/benchmarks"
+                target="_blank" rel="external">
+                  these benchmarks
+                </a>). The template-to-virtual-DOM compiler and the runtime
+                can be separated, so you can pre-compile templates and ship
+                your app with only the runtime, which is less than 12kb
+                min+gzip (as a reference, React 15 is 44kb min+gzip). The
+                compiler also works in the browser, which means you can still
+                drop in one script tag and start hacking, just like before.
+                Even with the compiler included, the build is sitting at 17kb
+                min+gzip, still lighter than the current 1.0 build.
+              </p>
+              <h2 id="Not-Your-Average-Virtual-DOM">
+                <a href="#Not-Your-Average-Virtual-DOM" class="headerlink"
+                title="Not Your Average Virtual-DOM">
+                  Not Your Average Virtual-DOM
+                </a>
+              </h2>
+              <p>
+                Now, just virtual-DOM sounds boring because there are so many
+                implementations out there - but this one is different.
+                Combined with Vue’s reactivity system, it provides optimized
+                re-rendering out of the box without you having to do anything.
+                Each component keeps track of its reactive dependencies during
+                its render, so the system knows precisely when to re-render,
+                and which components to re-render. No need for
+                <code>shouldComponentUpdate</code> or immutable data
+                structures - <strong>it just works</strong>.
+              </p>
+              <p>
+                In addition, Vue 2.0 applies some advanced optimizations
+                during the template-to-virtual-DOM compilation phase:
+              </p>
+              <ol>
+                <li>
+                  <p>
+                    It detects static class names and attributes so that they
+                    are never diffed after the initial render.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    It detects the maximum static sub trees (sub trees with no
+                    dynamic bindings) and hoist them out of the render
+                    function. So on each re-render, it directly reuses the
+                    exact same virtual nodes and skips the diffing.
+                  </p>
+                </li>
+              </ol>
+              <p>
+                These advanced optimizations can usually only be achieved via
+                Babel plugins when using JSX, but with Vue 2.0 you can get
+                them even using the in-browser compiler.
+              </p>
+              <p>
+                The new rendering system also allows you to disable reactive
+                conversions by simply freezing your data and manually force
+                updates, essentially giving you full control over the
+                re-rendering process.
+              </p>
+              <p>
+                With these techniques combined, Vue 2.0 ensures blazing fast
+                performance in every possible scenario while requiring minimal
+                optimization efforts from the developer.
+              </p>
+              <h2 id="Templates-JSX-or-Hyperscript">
+                <a href="#Templates-JSX-or-Hyperscript" class="headerlink"
+                title="Templates, JSX, or Hyperscript?">
+                  Templates, JSX, or Hyperscript?
+                </a>
+              </h2>
+              <p>
+                Developers tend to have strong opinions on templates vs. JSX.
+                On the one hand, templates are closer to HTML - they map
+                better to the semantic structure of your app and make it much
+                easier to think visually about the design, layout and styling.
+                On the other hand, templates are limited to the DSL while the
+                programmatic nature of JSX/hyperscript provides the full
+                expressive power of a turing-complete language.
+              </p>
+              <p>
+                Being a designer/developer hybrid, I prefer writing most of my
+                interfaces in templates, but in certain cases I do miss the
+                flexibility of JSX/hyperscript. An example would be writing a
+                component that programmatically handles its children,
+                something not feasible with just the template-based slot
+                mechanism.
+              </p>
+              <p>
+                Well, why not have both? In Vue 2.0, you can keep using the
+                familiar template syntax, or drop down to the virtual-DOM
+                layer whenever you feel constrained by the template DSL.
+                Instead of the <code>template</code> option, just replace it
+                with a <code>render</code> function. You can even embed render
+                functions in your templates using the special
+                <code>&lt;render&gt;</code> tag! The best of both worlds, in
+                the same framework.
+              </p>
+            </div>
+
+          </div>
+          <div class="entries_entry">
+
+            <div class="entry_titleline">
+              <span class="titleline_feed">
+                <span class="feed_favicon">
+                  <img class="favicon_image" src="http://vuejs.org/images/logo.png">
+                </span>
+                <span class="feed_title">Vue.js</span>
+              </span>
+              <span class="titleline_details">
+                <span class="details_title">Announcing Vue.js 2.0</span>
+                <!-- <span class="details_summary">Today I am thrilled to announce the first public preview of Vue.js 2.0, which brings along many exciting improvements and new features. Let’s take a peek at what’s in store!</span> -->
+                <span class="details_published">Apr 27, 2016</span>
+              </span>
+              <span class="titleline_controls">
+                <span class="controls_controller controller_star-entry">
+                  <i class="controller_icon star-entry_icon material-icons">star</i>
+                </span>
+                <span class="controls_controller controller-remove-entry">
+                  <i class="controller_icon remove-entry_icon material-icons">delete</i>
+                </span>
+              </span>
+            </div>
+
+            <div class="entry_content">
+              <p>
+                Today I am thrilled to announce the first public preview of
+                Vue.js 2.0, which brings along many exciting improvements and
+                new features. Let’s take a peek at what’s in store!
+              </p>
+              <a id="more"></a>
+              <h2 id="Even-Leaner-Even-Faster">
+                <a href="#Even-Leaner-Even-Faster" class="headerlink" title="Eve">
+                  Even Leaner, Even Faster">
+                </a>
+                Even Leaner, Even Faster
+              </h2>
+              <p>
+                Vue.js has always focused on staying light and fast, but 2.0
+                pushes it even further. The rendering layer is now based on a
+                lightweight virtual-DOM implementation (based on
+                <a href="https://github.com/paldepind/snabbdom" target="_blank"
+                rel="external">
+                  Snabbdom
+                </a>) that improves initial rendering speed and memory
+                consumption by up to 2~4x in most scenarios (check out
+                <a href="https://github.com/vuejs/vue/tree/next/benchmarks"
+                target="_blank" rel="external">
+                  these benchmarks
+                </a>). The template-to-virtual-DOM compiler and the runtime
+                can be separated, so you can pre-compile templates and ship
+                your app with only the runtime, which is less than 12kb
+                min+gzip (as a reference, React 15 is 44kb min+gzip). The
+                compiler also works in the browser, which means you can still
+                drop in one script tag and start hacking, just like before.
+                Even with the compiler included, the build is sitting at 17kb
+                min+gzip, still lighter than the current 1.0 build.
+              </p>
+              <h2 id="Not-Your-Average-Virtual-DOM">
+                <a href="#Not-Your-Average-Virtual-DOM" class="headerlink"
+                title="Not Your Average Virtual-DOM">
+                  Not Your Average Virtual-DOM
+                </a>
+              </h2>
+              <p>
+                Now, just virtual-DOM sounds boring because there are so many
+                implementations out there - but this one is different.
+                Combined with Vue’s reactivity system, it provides optimized
+                re-rendering out of the box without you having to do anything.
+                Each component keeps track of its reactive dependencies during
+                its render, so the system knows precisely when to re-render,
+                and which components to re-render. No need for
+                <code>shouldComponentUpdate</code> or immutable data
+                structures - <strong>it just works</strong>.
+              </p>
+              <p>
+                In addition, Vue 2.0 applies some advanced optimizations
+                during the template-to-virtual-DOM compilation phase:
+              </p>
+              <ol>
+                <li>
+                  <p>
+                    It detects static class names and attributes so that they
+                    are never diffed after the initial render.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    It detects the maximum static sub trees (sub trees with no
+                    dynamic bindings) and hoist them out of the render
+                    function. So on each re-render, it directly reuses the
+                    exact same virtual nodes and skips the diffing.
+                  </p>
+                </li>
+              </ol>
+              <p>
+                These advanced optimizations can usually only be achieved via
+                Babel plugins when using JSX, but with Vue 2.0 you can get
+                them even using the in-browser compiler.
+              </p>
+              <p>
+                The new rendering system also allows you to disable reactive
+                conversions by simply freezing your data and manually force
+                updates, essentially giving you full control over the
+                re-rendering process.
+              </p>
+              <p>
+                With these techniques combined, Vue 2.0 ensures blazing fast
+                performance in every possible scenario while requiring minimal
+                optimization efforts from the developer.
+              </p>
+              <h2 id="Templates-JSX-or-Hyperscript">
+                <a href="#Templates-JSX-or-Hyperscript" class="headerlink"
+                title="Templates, JSX, or Hyperscript?">
+                  Templates, JSX, or Hyperscript?
+                </a>
+              </h2>
+              <p>
+                Developers tend to have strong opinions on templates vs. JSX.
+                On the one hand, templates are closer to HTML - they map
+                better to the semantic structure of your app and make it much
+                easier to think visually about the design, layout and styling.
+                On the other hand, templates are limited to the DSL while the
+                programmatic nature of JSX/hyperscript provides the full
+                expressive power of a turing-complete language.
+              </p>
+              <p>
+                Being a designer/developer hybrid, I prefer writing most of my
+                interfaces in templates, but in certain cases I do miss the
+                flexibility of JSX/hyperscript. An example would be writing a
+                component that programmatically handles its children,
+                something not feasible with just the template-based slot
+                mechanism.
+              </p>
+              <p>
+                Well, why not have both? In Vue 2.0, you can keep using the
+                familiar template syntax, or drop down to the virtual-DOM
+                layer whenever you feel constrained by the template DSL.
+                Instead of the <code>template</code> option, just replace it
+                with a <code>render</code> function. You can even embed render
+                functions in your templates using the special
+                <code>&lt;render&gt;</code> tag! The best of both worlds, in
+                the same framework.
+              </p>
+            </div>
+
+          </div>
+
+          <div class="entries_entry entries_entry-active">
+
+            <div class="entry_titleline">
+              <span class="titleline_feed">
+                <span class="feed_favicon">
+                  <img class="favicon_image" src="http://vuejs.org/images/logo.png">
+                </span>
+                <span class="feed_title">Vue.js</span>
+              </span>
+              <span class="titleline_details">
+                <span class="details_title">Announcing Vue.js 2.0</span>
+                <!-- <span class="details_summary">Today I am thrilled to announce the first public preview of Vue.js 2.0, which brings along many exciting improvements and new features. Let’s take a peek at what’s in store!</span> -->
+                <span class="details_published">Apr 27, 2016</span>
+              </span>
+              <span class="titleline_controls">
+                <span class="controls_controller controller_star-entry">
+                  <i class="controller_icon star-entry_icon material-icons">star</i>
+                </span>
+                <span class="controls_controller controller-remove-entry">
+                  <i class="controller_icon remove-entry_icon material-icons">delete</i>
+                </span>
+              </span>
+            </div>
+
+            <div class="entry_content">
+              <p>
+                Today I am thrilled to announce the first public preview of
+                Vue.js 2.0, which brings along many exciting improvements and
+                new features. Let’s take a peek at what’s in store!
+              </p>
+              <h2 id="Even-Leaner-Even-Faster">
+                <a href="#Even-Leaner-Even-Faster" class="headerlink" title="Eve">
+                  Even Leaner, Even Faster">
+                </a>
+              </h2>
+              <p>
+                Vue.js has always focused on staying light and fast, but 2.0
+                pushes it even further. The rendering layer is now based on a
+                lightweight virtual-DOM implementation (based on
+                <a href="https://github.com/paldepind/snabbdom" target="_blank"
+                rel="external">
+                  Snabbdom
+                </a>) that improves initial rendering speed and memory
+                consumption by up to 2~4x in most scenarios (check out
+                <a href="https://github.com/vuejs/vue/tree/next/benchmarks"
+                target="_blank" rel="external">
+                  these benchmarks
+                </a>). The template-to-virtual-DOM compiler and the runtime
+                can be separated, so you can pre-compile templates and ship
+                your app with only the runtime, which is less than 12kb
+                min+gzip (as a reference, React 15 is 44kb min+gzip). The
+                compiler also works in the browser, which means you can still
+                drop in one script tag and start hacking, just like before.
+                Even with the compiler included, the build is sitting at 17kb
+                min+gzip, still lighter than the current 1.0 build.
+              </p>
+              <h2 id="Templates-JSX-or-Hyperscript">
+                <a href="#Templates-JSX-or-Hyperscript" class="headerlink"
+                title="Templates, JSX, or Hyperscript?">
+                  Templates, JSX, or Hyperscript?
+                </a>
+              </h2>
+              <p>
+                Developers tend to have strong opinions on templates vs. JSX.
+                On the one hand, templates are closer to HTML - they map
+                better to the semantic structure of your app and make it much
+                easier to think visually about the design, layout and styling.
+                On the other hand, templates are limited to the DSL while the
+                programmatic nature of JSX/hyperscript provides the full
+                expressive power of a turing-complete language.
+              </p>
+              <p>
+                Being a designer/developer hybrid, I prefer writing most of my
+                interfaces in templates, but in certain cases I do miss the
+                flexibility of JSX/hyperscript. An example would be writing a
+                component that programmatically handles its children,
+                something not feasible with just the template-based slot
+                mechanism.
+              </p>
+              <p>
+                Well, why not have both? In Vue 2.0, you can keep using the
+                familiar template syntax, or drop down to the virtual-DOM
+                layer whenever you feel constrained by the template DSL.
+                Instead of the <code>template</code> option, just replace it
+                with a <code>render</code> function. You can even embed render
+                functions in your templates using the special
+                <code>&lt;render&gt;</code> tag! The best of both worlds, in
+                the same framework.
+              </p>
+            </div>
+
           </div>
 
           <div class="entries_entry">
-            <span class="entry_feed">
-              <span class="feed_favicon">
-                <img class="favicon_image" src="http://vuejs.org/images/logo.png">
-              </span>
-              <span class="feed_title">Vue.js</span>
-            </span>
 
-            <span class="entry_details">
-              <span class="details_title">Announcing Vue.js 2.0</span>
-              <!-- <span class="details_summary">Today I am thrilled to announce the first public preview of Vue.js 2.0, which brings along many exciting improvements and new features. Let’s take a peek at what’s in store!</span> -->
-              <!-- <span class="details_content">
-                <p>Today I am thrilled to announce the first public preview of Vue.js 2.0, which brings along many exciting improvements and new features. Let’s take a peek at what’s in store!</p> <a id="more"></a> <h2 id="Even-Leaner-Even-Faster"><a href="#Even-Leaner-Even-Faster" class="headerlink" title="Eve">n Leaner, Even Faster"></a>Even Leaner, Even Faster</h2><p>Vue.js has always focused on staying light and fast, but 2.0 pushes it even further. The rendering layer is now based on a lightweight virtual-DOM implementation (based on <a href="https://github.com/paldepind/snabbdom" target="_blank" rel="external">Snabbdom</a>) that improves initial rendering speed and memory consumption by up to 2~4x in most scenarios (check out <a href="https://github.com/vuejs/vue/tree/next/benchmarks" target="_blank" rel="external">these benchmarks</a>). The template-to-virtual-DOM compiler and the runtime can be separated, so you can pre-compile templates and ship your app with only the runtime, which is less than 12kb min+gzip (as a reference, React 15 is 44kb min+gzip). The compiler also works in the browser, which means you can still drop in one script tag and start hacking, just like before. Even with the compiler included, the build is sitting at 17kb min+gzip, still lighter than the current 1.0 build.</p> <h2 id="Not-Your-Average-Virtual-DOM"><a href="#Not-Your-Average-Virtual-DOM" class="headerlink" title="Not Your Average Virtual-DOM"></a>Not Your Average Virtual-DOM</h2><p>Now, just virtual-DOM sounds boring because there are so many implementations out there - but this one is different. Combined with Vue’s reactivity system, it provides optimized re-rendering out of the box without you having to do anything. Each component keeps track of its reactive dependencies during its render, so the system knows precisely when to re-render, and which components to re-render. No need for <code>shouldComponentUpdate</code> or immutable data structures - <strong>it just works</strong>.</p> <p>In addition, Vue 2.0 applies some advanced optimizations during the template-to-virtual-DOM compilation phase:</p> <ol> <li><p>It detects static class names and attributes so that they are never diffed after the initial render.</p> </li> <li><p>It detects the maximum static sub trees (sub trees with no dynamic bindings) and hoist them out of the render function. So on each re-render, it directly reuses the exact same virtual nodes and skips the diffing.</p> </li> </ol> <p>These advanced optimizations can usually only be achieved via Babel plugins when using JSX, but with Vue 2.0 you can get them even using the in-browser compiler.</p> <p>The new rendering system also allows you to disable reactive conversions by simply freezing your data and manually force updates, essentially giving you full control over the re-rendering process.</p> <p>With these techniques combined, Vue 2.0 ensures blazing fast performance in every possible scenario while requiring minimal optimization efforts from the developer.</p> <h2 id="Templates-JSX-or-Hyperscript"><a href="#Templates-JSX-or-Hyperscript" class="headerlink" title="Templates, JSX, or Hyperscript?"></a>Templates, JSX, or Hyperscript?</h2><p>Developers tend to have strong opinions on templates vs. JSX. On the one hand, templates are closer to HTML - they map better to the semantic structure of your app and make it much easier to think visually about the design, layout and styling. On the other hand, templates are limited to the DSL while the programmatic nature of JSX/hyperscript provides the full expressive power of a turing-complete language.</p> <p>Being a designer/developer hybrid, I prefer writing most of my interfaces in templates, but in certain cases I do miss the flexibility of JSX/hyperscript. An example would be writing a component that programmatically handles its children, something not feasible with just the template-based slot mechanism.</p> <p>Well, why not have both? In Vue 2.0, you can keep using the familiar template syntax, or drop down to the virtual-DOM layer whenever you feel constrained by the template DSL. Instead of the <code>template</code> option, just replace it with a <code>render</code> function. You can even embed render functions in your templates using the special <code>&lt;render&gt;</code> tag! The best of both worlds, in the same framework.</p> <h2 id="Streaming-Server-side-Rendering"><a href="#Streaming-Server-side-Rendering" class="headerlink" title="Streaming Server-side Rendering"></a>Streaming Server-side Rendering</h2><p>With the migration to virtual-DOM, Vue 2.0 naturally supports server-side rendering with client-side hydration. One pain point of current mainstream server rendering implementations, such as React’s, is that the rendering is synchronous so it can block the server’s event loop if the app is complex. Synchronous server-side rendering may even adversely affect time-to-content on the client. Vue 2.0 provides built-in streaming server-side rendering, so that you can render your component, get a readable stream back and directly pipe it to the HTTP response. This ensures your server is responsive, and gets the rendered content to your users faster.</p> <h2 id="Unlocking-More-Possibilities"><a href="#Unlocking-More-Possibilities" class="headerlink" title="Unlocking More Possibilities"></a>Unlocking More Possibilities</h2><p>With the new architecture, there are even more possibilities to explore - for example, rendering to native interfaces on mobile. Currently, we are exploring a port of Vue.js 2.0 that uses <a href="http://alibaba.github.io/weex/" target="_blank" rel="external">weex</a> as a native rendering backend, a project maintained by engineers at Alibaba Group, the biggest tech enterprise of China. It is also technically feasible to adapt Vue 2.0’s virtual-DOM to run inside ReactNative. We are excited to see how it goes!</p> <h2 id="Compatibility-and-What-to-Expect-Next"><a href="#Compatibility-and-What-to-Expect-Next" class="headerlink" title="Compatibility and What to Expect Next"></a>Compatibility and What to Expect Next</h2><p>Vue.js 2.0 is still in pre-alpha, but you can checkout the source code <a href="https://github.com/vuejs/vue/tree/next/" target="_blank" rel="external">here</a>. Despite being a full rewrite, the API is largely compatible with 1.0 with the exception of some intentional deprecations. Check out <a href="https://github.com/vuejs/vue/tree/next/examples" target="_blank" rel="external">the same official examples written in 2.0</a> - you will see that not much has changed!</p> <p>The feature deprecations are part of our continued effort to provide the simplest API possible for maximum developer productivity. You can check out a 1.0 vs. 2.0 feature comparison <a href="https://github.com/vuejs/vue/wiki/2.0-features" target="_blank" rel="external">here</a>. This does mean that it will take some effort to migrate an existing app if you happen to use some of these deprecated features heavily, but we will provide detailed upgrade guides in the future.</p> <p>There is still much work left to be done. We will be releasing the first alpha once we reach satisfactory test coverage, and we are aiming for beta by end of May / early June. In addition to more tests, we also need to update the supporting libraries (vue-router, Vuex, vue-loader, vueify…). Currently only Vuex works with 2.0 out of the box, but we will make sure that everything works smoothly together when 2.0 ships.</p> <p>We are also not forgetting about 1.x! 1.1 will be released alongside 2.0 beta, with an LTS period of 6-month critical bug fixes and 9-month security updates. It will also ship with optional deprecation warnings to get you prepared for upgrading to 2.0. Stay tuned!</p>
-              </span> -->
-              <span class="details_published">Apr 27, 2016</span>
-            </span>
+            <div class="entry_titleline">
+              <span class="titleline_feed">
+                <span class="feed_favicon">
+                  <img class="favicon_image" src="http://vuejs.org/images/logo.png">
+                </span>
+                <span class="feed_title">Vue.js</span>
+              </span>
+              <span class="titleline_details">
+                <span class="details_title">Announcing Vue.js 2.0</span>
+                <!-- <span class="details_summary">Today I am thrilled to announce the first public preview of Vue.js 2.0, which brings along many exciting improvements and new features. Let’s take a peek at what’s in store!</span> -->
+                <span class="details_published">Apr 27, 2016</span>
+              </span>
+              <span class="titleline_controls">
+                <span class="controls_controller controller_star-entry">
+                  <i class="controller_icon star-entry_icon material-icons">star</i>
+                </span>
+                <span class="controls_controller controller-remove-entry">
+                  <i class="controller_icon remove-entry_icon material-icons">delete</i>
+                </span>
+              </span>
+            </div>
 
-            <span class="entry_controls">
-              <span class="controls_controller controller_star-entry">
-                <i class="controller_icon star-entry_icon material-icons">star</i>
-              </span>
-              <span class="controls_controller controller-remove-entry">
-                <i class="controller_icon remove-entry_icon material-icons">delete</i>
-              </span>
-            </span>
+            <div class="entry_content">
+              <p>
+                Today I am thrilled to announce the first public preview of
+                Vue.js 2.0, which brings along many exciting improvements and
+                new features. Let’s take a peek at what’s in store!
+              </p>
+              <a id="more"></a>
+              <h2 id="Even-Leaner-Even-Faster">
+                <a href="#Even-Leaner-Even-Faster" class="headerlink" title="Eve">
+                  Even Leaner, Even Faster">
+                </a>
+                Even Leaner, Even Faster
+              </h2>
+              <p>
+                Vue.js has always focused on staying light and fast, but 2.0
+                pushes it even further. The rendering layer is now based on a
+                lightweight virtual-DOM implementation (based on
+                <a href="https://github.com/paldepind/snabbdom" target="_blank"
+                rel="external">
+                  Snabbdom
+                </a>) that improves initial rendering speed and memory
+                consumption by up to 2~4x in most scenarios (check out
+                <a href="https://github.com/vuejs/vue/tree/next/benchmarks"
+                target="_blank" rel="external">
+                  these benchmarks
+                </a>). The template-to-virtual-DOM compiler and the runtime
+                can be separated, so you can pre-compile templates and ship
+                your app with only the runtime, which is less than 12kb
+                min+gzip (as a reference, React 15 is 44kb min+gzip). The
+                compiler also works in the browser, which means you can still
+                drop in one script tag and start hacking, just like before.
+                Even with the compiler included, the build is sitting at 17kb
+                min+gzip, still lighter than the current 1.0 build.
+              </p>
+              <h2 id="Not-Your-Average-Virtual-DOM">
+                <a href="#Not-Your-Average-Virtual-DOM" class="headerlink"
+                title="Not Your Average Virtual-DOM">
+                  Not Your Average Virtual-DOM
+                </a>
+              </h2>
+              <p>
+                Now, just virtual-DOM sounds boring because there are so many
+                implementations out there - but this one is different.
+                Combined with Vue’s reactivity system, it provides optimized
+                re-rendering out of the box without you having to do anything.
+                Each component keeps track of its reactive dependencies during
+                its render, so the system knows precisely when to re-render,
+                and which components to re-render. No need for
+                <code>shouldComponentUpdate</code> or immutable data
+                structures - <strong>it just works</strong>.
+              </p>
+              <p>
+                In addition, Vue 2.0 applies some advanced optimizations
+                during the template-to-virtual-DOM compilation phase:
+              </p>
+              <ol>
+                <li>
+                  <p>
+                    It detects static class names and attributes so that they
+                    are never diffed after the initial render.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    It detects the maximum static sub trees (sub trees with no
+                    dynamic bindings) and hoist them out of the render
+                    function. So on each re-render, it directly reuses the
+                    exact same virtual nodes and skips the diffing.
+                  </p>
+                </li>
+              </ol>
+              <p>
+                These advanced optimizations can usually only be achieved via
+                Babel plugins when using JSX, but with Vue 2.0 you can get
+                them even using the in-browser compiler.
+              </p>
+              <p>
+                The new rendering system also allows you to disable reactive
+                conversions by simply freezing your data and manually force
+                updates, essentially giving you full control over the
+                re-rendering process.
+              </p>
+              <p>
+                With these techniques combined, Vue 2.0 ensures blazing fast
+                performance in every possible scenario while requiring minimal
+                optimization efforts from the developer.
+              </p>
+              <h2 id="Templates-JSX-or-Hyperscript">
+                <a href="#Templates-JSX-or-Hyperscript" class="headerlink"
+                title="Templates, JSX, or Hyperscript?">
+                  Templates, JSX, or Hyperscript?
+                </a>
+              </h2>
+              <p>
+                Developers tend to have strong opinions on templates vs. JSX.
+                On the one hand, templates are closer to HTML - they map
+                better to the semantic structure of your app and make it much
+                easier to think visually about the design, layout and styling.
+                On the other hand, templates are limited to the DSL while the
+                programmatic nature of JSX/hyperscript provides the full
+                expressive power of a turing-complete language.
+              </p>
+              <p>
+                Being a designer/developer hybrid, I prefer writing most of my
+                interfaces in templates, but in certain cases I do miss the
+                flexibility of JSX/hyperscript. An example would be writing a
+                component that programmatically handles its children,
+                something not feasible with just the template-based slot
+                mechanism.
+              </p>
+              <p>
+                Well, why not have both? In Vue 2.0, you can keep using the
+                familiar template syntax, or drop down to the virtual-DOM
+                layer whenever you feel constrained by the template DSL.
+                Instead of the <code>template</code> option, just replace it
+                with a <code>render</code> function. You can even embed render
+                functions in your templates using the special
+                <code>&lt;render&gt;</code> tag! The best of both worlds, in
+                the same framework.
+              </p>
+            </div>
+
           </div>
-
           <div class="entries_entry">
-            <span class="entry_feed">
-              <span class="feed_favicon">
-                <img class="favicon_image" src="http://vuejs.org/images/logo.png">
-              </span>
-              <span class="feed_title">Vue.js</span>
-            </span>
 
-            <span class="entry_details">
-              <span class="details_title">Announcing Vue.js 2.0</span>
-              <!-- <span class="details_summary">Today I am thrilled to announce the first public preview of Vue.js 2.0, which brings along many exciting improvements and new features. Let’s take a peek at what’s in store!</span> -->
-              <!-- <span class="details_content">
-                <p>Today I am thrilled to announce the first public preview of Vue.js 2.0, which brings along many exciting improvements and new features. Let’s take a peek at what’s in store!</p> <a id="more"></a> <h2 id="Even-Leaner-Even-Faster"><a href="#Even-Leaner-Even-Faster" class="headerlink" title="Eve">n Leaner, Even Faster"></a>Even Leaner, Even Faster</h2><p>Vue.js has always focused on staying light and fast, but 2.0 pushes it even further. The rendering layer is now based on a lightweight virtual-DOM implementation (based on <a href="https://github.com/paldepind/snabbdom" target="_blank" rel="external">Snabbdom</a>) that improves initial rendering speed and memory consumption by up to 2~4x in most scenarios (check out <a href="https://github.com/vuejs/vue/tree/next/benchmarks" target="_blank" rel="external">these benchmarks</a>). The template-to-virtual-DOM compiler and the runtime can be separated, so you can pre-compile templates and ship your app with only the runtime, which is less than 12kb min+gzip (as a reference, React 15 is 44kb min+gzip). The compiler also works in the browser, which means you can still drop in one script tag and start hacking, just like before. Even with the compiler included, the build is sitting at 17kb min+gzip, still lighter than the current 1.0 build.</p> <h2 id="Not-Your-Average-Virtual-DOM"><a href="#Not-Your-Average-Virtual-DOM" class="headerlink" title="Not Your Average Virtual-DOM"></a>Not Your Average Virtual-DOM</h2><p>Now, just virtual-DOM sounds boring because there are so many implementations out there - but this one is different. Combined with Vue’s reactivity system, it provides optimized re-rendering out of the box without you having to do anything. Each component keeps track of its reactive dependencies during its render, so the system knows precisely when to re-render, and which components to re-render. No need for <code>shouldComponentUpdate</code> or immutable data structures - <strong>it just works</strong>.</p> <p>In addition, Vue 2.0 applies some advanced optimizations during the template-to-virtual-DOM compilation phase:</p> <ol> <li><p>It detects static class names and attributes so that they are never diffed after the initial render.</p> </li> <li><p>It detects the maximum static sub trees (sub trees with no dynamic bindings) and hoist them out of the render function. So on each re-render, it directly reuses the exact same virtual nodes and skips the diffing.</p> </li> </ol> <p>These advanced optimizations can usually only be achieved via Babel plugins when using JSX, but with Vue 2.0 you can get them even using the in-browser compiler.</p> <p>The new rendering system also allows you to disable reactive conversions by simply freezing your data and manually force updates, essentially giving you full control over the re-rendering process.</p> <p>With these techniques combined, Vue 2.0 ensures blazing fast performance in every possible scenario while requiring minimal optimization efforts from the developer.</p> <h2 id="Templates-JSX-or-Hyperscript"><a href="#Templates-JSX-or-Hyperscript" class="headerlink" title="Templates, JSX, or Hyperscript?"></a>Templates, JSX, or Hyperscript?</h2><p>Developers tend to have strong opinions on templates vs. JSX. On the one hand, templates are closer to HTML - they map better to the semantic structure of your app and make it much easier to think visually about the design, layout and styling. On the other hand, templates are limited to the DSL while the programmatic nature of JSX/hyperscript provides the full expressive power of a turing-complete language.</p> <p>Being a designer/developer hybrid, I prefer writing most of my interfaces in templates, but in certain cases I do miss the flexibility of JSX/hyperscript. An example would be writing a component that programmatically handles its children, something not feasible with just the template-based slot mechanism.</p> <p>Well, why not have both? In Vue 2.0, you can keep using the familiar template syntax, or drop down to the virtual-DOM layer whenever you feel constrained by the template DSL. Instead of the <code>template</code> option, just replace it with a <code>render</code> function. You can even embed render functions in your templates using the special <code>&lt;render&gt;</code> tag! The best of both worlds, in the same framework.</p> <h2 id="Streaming-Server-side-Rendering"><a href="#Streaming-Server-side-Rendering" class="headerlink" title="Streaming Server-side Rendering"></a>Streaming Server-side Rendering</h2><p>With the migration to virtual-DOM, Vue 2.0 naturally supports server-side rendering with client-side hydration. One pain point of current mainstream server rendering implementations, such as React’s, is that the rendering is synchronous so it can block the server’s event loop if the app is complex. Synchronous server-side rendering may even adversely affect time-to-content on the client. Vue 2.0 provides built-in streaming server-side rendering, so that you can render your component, get a readable stream back and directly pipe it to the HTTP response. This ensures your server is responsive, and gets the rendered content to your users faster.</p> <h2 id="Unlocking-More-Possibilities"><a href="#Unlocking-More-Possibilities" class="headerlink" title="Unlocking More Possibilities"></a>Unlocking More Possibilities</h2><p>With the new architecture, there are even more possibilities to explore - for example, rendering to native interfaces on mobile. Currently, we are exploring a port of Vue.js 2.0 that uses <a href="http://alibaba.github.io/weex/" target="_blank" rel="external">weex</a> as a native rendering backend, a project maintained by engineers at Alibaba Group, the biggest tech enterprise of China. It is also technically feasible to adapt Vue 2.0’s virtual-DOM to run inside ReactNative. We are excited to see how it goes!</p> <h2 id="Compatibility-and-What-to-Expect-Next"><a href="#Compatibility-and-What-to-Expect-Next" class="headerlink" title="Compatibility and What to Expect Next"></a>Compatibility and What to Expect Next</h2><p>Vue.js 2.0 is still in pre-alpha, but you can checkout the source code <a href="https://github.com/vuejs/vue/tree/next/" target="_blank" rel="external">here</a>. Despite being a full rewrite, the API is largely compatible with 1.0 with the exception of some intentional deprecations. Check out <a href="https://github.com/vuejs/vue/tree/next/examples" target="_blank" rel="external">the same official examples written in 2.0</a> - you will see that not much has changed!</p> <p>The feature deprecations are part of our continued effort to provide the simplest API possible for maximum developer productivity. You can check out a 1.0 vs. 2.0 feature comparison <a href="https://github.com/vuejs/vue/wiki/2.0-features" target="_blank" rel="external">here</a>. This does mean that it will take some effort to migrate an existing app if you happen to use some of these deprecated features heavily, but we will provide detailed upgrade guides in the future.</p> <p>There is still much work left to be done. We will be releasing the first alpha once we reach satisfactory test coverage, and we are aiming for beta by end of May / early June. In addition to more tests, we also need to update the supporting libraries (vue-router, Vuex, vue-loader, vueify…). Currently only Vuex works with 2.0 out of the box, but we will make sure that everything works smoothly together when 2.0 ships.</p> <p>We are also not forgetting about 1.x! 1.1 will be released alongside 2.0 beta, with an LTS period of 6-month critical bug fixes and 9-month security updates. It will also ship with optional deprecation warnings to get you prepared for upgrading to 2.0. Stay tuned!</p>
-              </span> -->
-              <span class="details_published">Apr 27, 2016</span>
-            </span>
+            <div class="entry_titleline">
+              <span class="titleline_feed">
+                <span class="feed_favicon">
+                  <img class="favicon_image" src="http://vuejs.org/images/logo.png">
+                </span>
+                <span class="feed_title">Vue.js</span>
+              </span>
+              <span class="titleline_details">
+                <span class="details_title">Announcing Vue.js 2.0</span>
+                <!-- <span class="details_summary">Today I am thrilled to announce the first public preview of Vue.js 2.0, which brings along many exciting improvements and new features. Let’s take a peek at what’s in store!</span> -->
+                <span class="details_published">Apr 27, 2016</span>
+              </span>
+              <span class="titleline_controls">
+                <span class="controls_controller controller_star-entry">
+                  <i class="controller_icon star-entry_icon material-icons">star</i>
+                </span>
+                <span class="controls_controller controller-remove-entry">
+                  <i class="controller_icon remove-entry_icon material-icons">delete</i>
+                </span>
+              </span>
+            </div>
 
-            <span class="entry_controls">
-              <span class="controls_controller controller_star-entry">
-                <i class="controller_icon star-entry_icon material-icons">star</i>
-              </span>
-              <span class="controls_controller controller-remove-entry">
-                <i class="controller_icon remove-entry_icon material-icons">delete</i>
-              </span>
-            </span>
+            <div class="entry_content">
+              <p>
+                Today I am thrilled to announce the first public preview of
+                Vue.js 2.0, which brings along many exciting improvements and
+                new features. Let’s take a peek at what’s in store!
+              </p>
+              <a id="more"></a>
+              <h2 id="Even-Leaner-Even-Faster">
+                <a href="#Even-Leaner-Even-Faster" class="headerlink" title="Eve">
+                  Even Leaner, Even Faster">
+                </a>
+                Even Leaner, Even Faster
+              </h2>
+              <p>
+                Vue.js has always focused on staying light and fast, but 2.0
+                pushes it even further. The rendering layer is now based on a
+                lightweight virtual-DOM implementation (based on
+                <a href="https://github.com/paldepind/snabbdom" target="_blank"
+                rel="external">
+                  Snabbdom
+                </a>) that improves initial rendering speed and memory
+                consumption by up to 2~4x in most scenarios (check out
+                <a href="https://github.com/vuejs/vue/tree/next/benchmarks"
+                target="_blank" rel="external">
+                  these benchmarks
+                </a>). The template-to-virtual-DOM compiler and the runtime
+                can be separated, so you can pre-compile templates and ship
+                your app with only the runtime, which is less than 12kb
+                min+gzip (as a reference, React 15 is 44kb min+gzip). The
+                compiler also works in the browser, which means you can still
+                drop in one script tag and start hacking, just like before.
+                Even with the compiler included, the build is sitting at 17kb
+                min+gzip, still lighter than the current 1.0 build.
+              </p>
+              <h2 id="Not-Your-Average-Virtual-DOM">
+                <a href="#Not-Your-Average-Virtual-DOM" class="headerlink"
+                title="Not Your Average Virtual-DOM">
+                  Not Your Average Virtual-DOM
+                </a>
+              </h2>
+              <p>
+                Now, just virtual-DOM sounds boring because there are so many
+                implementations out there - but this one is different.
+                Combined with Vue’s reactivity system, it provides optimized
+                re-rendering out of the box without you having to do anything.
+                Each component keeps track of its reactive dependencies during
+                its render, so the system knows precisely when to re-render,
+                and which components to re-render. No need for
+                <code>shouldComponentUpdate</code> or immutable data
+                structures - <strong>it just works</strong>.
+              </p>
+              <p>
+                In addition, Vue 2.0 applies some advanced optimizations
+                during the template-to-virtual-DOM compilation phase:
+              </p>
+              <ol>
+                <li>
+                  <p>
+                    It detects static class names and attributes so that they
+                    are never diffed after the initial render.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    It detects the maximum static sub trees (sub trees with no
+                    dynamic bindings) and hoist them out of the render
+                    function. So on each re-render, it directly reuses the
+                    exact same virtual nodes and skips the diffing.
+                  </p>
+                </li>
+              </ol>
+              <p>
+                These advanced optimizations can usually only be achieved via
+                Babel plugins when using JSX, but with Vue 2.0 you can get
+                them even using the in-browser compiler.
+              </p>
+              <p>
+                The new rendering system also allows you to disable reactive
+                conversions by simply freezing your data and manually force
+                updates, essentially giving you full control over the
+                re-rendering process.
+              </p>
+              <p>
+                With these techniques combined, Vue 2.0 ensures blazing fast
+                performance in every possible scenario while requiring minimal
+                optimization efforts from the developer.
+              </p>
+              <h2 id="Templates-JSX-or-Hyperscript">
+                <a href="#Templates-JSX-or-Hyperscript" class="headerlink"
+                title="Templates, JSX, or Hyperscript?">
+                  Templates, JSX, or Hyperscript?
+                </a>
+              </h2>
+              <p>
+                Developers tend to have strong opinions on templates vs. JSX.
+                On the one hand, templates are closer to HTML - they map
+                better to the semantic structure of your app and make it much
+                easier to think visually about the design, layout and styling.
+                On the other hand, templates are limited to the DSL while the
+                programmatic nature of JSX/hyperscript provides the full
+                expressive power of a turing-complete language.
+              </p>
+              <p>
+                Being a designer/developer hybrid, I prefer writing most of my
+                interfaces in templates, but in certain cases I do miss the
+                flexibility of JSX/hyperscript. An example would be writing a
+                component that programmatically handles its children,
+                something not feasible with just the template-based slot
+                mechanism.
+              </p>
+              <p>
+                Well, why not have both? In Vue 2.0, you can keep using the
+                familiar template syntax, or drop down to the virtual-DOM
+                layer whenever you feel constrained by the template DSL.
+                Instead of the <code>template</code> option, just replace it
+                with a <code>render</code> function. You can even embed render
+                functions in your templates using the special
+                <code>&lt;render&gt;</code> tag! The best of both worlds, in
+                the same framework.
+              </p>
+            </div>
+
           </div>
-
         </div>
       </div>
-
     </div>
   </section>
 

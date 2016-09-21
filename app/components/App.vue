@@ -3,12 +3,18 @@
 <style lang="stylus" scope>
 
 main
-  width 100vw
-  height 100vh
+  min-width 100%
+  min-height 100%
 
 .header
+  z-index 1
+  position fixed
+  top 0
+  left 0
   height calc(55px - 1px)
+  width calc(100% - 30px)
   border-bottom 1px solid rgb(228, 232, 235)
+  background rgba(255, 255, 255, .925)
   display flex
   justify-content space-between
   align-items center
