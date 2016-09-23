@@ -20,6 +20,13 @@ const mutations = {
   REMOVE_FEED(state, feed) {
     state.feeds.$remove(feed)
   },
+  
+  ADD_FEED(state, feed) {
+    state.feeds = {
+      ...state.feeds,
+      feed
+    }
+  },
 
   SET_ENTRIES(state, entries) {
     state.entries = entries
